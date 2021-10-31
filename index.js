@@ -56,6 +56,30 @@ app.post('/addOrders', async (req, res)=> {
    const result = await orderServiceCollection.insertOne(order);
    res.send(result);
 })
+// delete
+app.delete('/addOrders/:id', async(req, res)=>{
+    const id =req.params.id;
+    const query = {_id: ObjectId(id)};
+    const result = await orderServiceCollection.deleteOne(query)
+    res.json(result)
+
+})
+// update
+app.put('/addOrders/:id', async(req, res)=>{
+const id = req.params.id;
+const query={_id: ObjectId(id)}
+const option ={unset:true};
+const updateDoc={
+    $set : {
+        status:'Approved'
+
+    },
+};
+const result = await orderServiceCollection.updateOne(query,updateDoc,option)
+res.json(result)
+
+});
+
 }
 
  finally {
